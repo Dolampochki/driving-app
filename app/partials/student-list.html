@@ -1,4 +1,4 @@
-<ul class="list-unstyled" ng-controller="studentListController as studentListCtrl">
+<ul class="list-unstyled">
   <li ng-repeat="student in studentListCtrl.students | filter:searchText | orderBy: sortBy">
     <div class="row">
       <div class="col-xs-12 col-md-12">
@@ -6,22 +6,43 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xs-12 col-md-6">
+      <div class="col-xs-12 col-md-4">
         <div class="row">
-          <div class="col-xs-4 col-md-3">ID:</div><div class="col-xs-8 col-md-9">{{student.id}}</div>
-          <div class="col-xs-4 col-md-3">Phone:</div><div class="col-xs-8 col-md-9">{{student.phone}}</div>
-          <div class="col-xs-4 col-md-3">BirthDate:</div><div class="col-xs-8 col-md-9">{{student.birthDate | limitTo:10}}</div>
-          <div class="col-xs-4 col-md-3">Type:</div><div class="col-xs-8 col-md-9">{{student.automat &&  "Automat" || "Manual"}}</div>
+          <div class="col-xs-4 col-md-4">ID:</div><div class="col-xs-8 col-md-8">{{student.id}}</div>
+          <div class="col-xs-4 col-md-4">Phone:</div><div class="col-xs-8 col-md-8">{{student.phone}}</div>
+          <div class="col-xs-4 col-md-4">BirthDate:</div><div class="col-xs-8 col-md-8">{{student.birthDate | limitTo:10}}</div>
+          <div class="col-xs-4 col-md-4">Type:</div><div class="col-xs-8 col-md-8">{{student.automat &&  "Automat" || "Manual"}}</div>
         </div>
       </div>
-      <div class="col-xs-12 col-md-6">
+      <div class="col-xs-12 col-md-4">
         <div class="row">
-          <div class="col-xs-4 col-md-3">Theory:</div><div class="col-xs-8 col-md-9">{{student.automat &&  "Yes" || "No"}}</div>
-          <div class="col-xs-4 col-md-3">Cost:</div><div class="col-xs-8 col-md-9">{{student.cost}}</div>
-          <div class="col-xs-4 col-md-3">Lessons:</div><div class="col-xs-8 col-md-9">{{student.lessonsStart}}</div>
-          <div class="col-xs-4 col-md-3">Debt:</div><div class="col-xs-8 col-md-9">0</div>
+          <div class="col-xs-4 col-md-4">Theory:</div><div class="col-xs-8 col-md-8">{{student.automat &&  "Yes" || "No"}}</div>
+          <div class="col-xs-4 col-md-4">Cost:</div><div class="col-xs-8 col-md-8">{{student.cost}}</div>
+          <div class="col-xs-4 col-md-4">Lessons:</div><div class="col-xs-8 col-md-8">{{studentListCtrl.getTotalLessons(student)}}</div>
+          <div class="col-xs-4 col-md-4">Debt:</div><div class="col-xs-8 col-md-8">{{studentListCtrl.getTotalPaid(student)}}</div>
         </div>
       </div>
+      <div class="col-xs-12 col-md-4 text-right">
+        <button type="button" class="btn btn-lg active" ng-click="hideShow=(hideShow ? false : true)">{{lessonsListCtrl.showLessons ? "Close" : "Show Lessons"}}</button>
+      </div>
+    </div>
+
+    <br />
+    <div ng-controller="lessonsListController as lessonsListCtrl" ng-if="hideShow">
+    <table class="table">
+      <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Lessons Count</th>
+        <th>Paid</th>
+      </tr>
+      <tr ng-repeat="lesson in student.lessons">
+        <td>{{lesson.lessonDate}}</td>
+        <td>{{lesson.lessonTime}}</td>
+        <td>{{lesson.lessonCount}}</td>
+        <td>{{lesson.lessonPaid}}</td>
+      </tr>
+    </table>
     </div>
     <hr />
   </li>
