@@ -1,0 +1,28 @@
+<ul class="list-unstyled" ng-controller="studentListController as studentListCtrl">
+  <li ng-repeat="student in studentListCtrl.students | filter:searchText | orderBy: sortBy">
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <h2>{{student.lastName + ' ' + student.firstName}}</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <div class="row">
+          <div class="col-xs-4 col-md-3">ID:</div><div class="col-xs-8 col-md-9">{{student.id}}</div>
+          <div class="col-xs-4 col-md-3">Phone:</div><div class="col-xs-8 col-md-9">{{student.phone}}</div>
+          <div class="col-xs-4 col-md-3">BirthDate:</div><div class="col-xs-8 col-md-9">{{student.birthDate | limitTo:10}}</div>
+          <div class="col-xs-4 col-md-3">Type:</div><div class="col-xs-8 col-md-9">{{student.automat &&  "Automat" || "Manual"}}</div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <div class="row">
+          <div class="col-xs-4 col-md-3">Theory:</div><div class="col-xs-8 col-md-9">{{student.automat &&  "Yes" || "No"}}</div>
+          <div class="col-xs-4 col-md-3">Cost:</div><div class="col-xs-8 col-md-9">{{student.cost}}</div>
+          <div class="col-xs-4 col-md-3">Lessons:</div><div class="col-xs-8 col-md-9">{{student.lessonsStart}}</div>
+          <div class="col-xs-4 col-md-3">Debt:</div><div class="col-xs-8 col-md-9">0</div>
+        </div>
+      </div>
+    </div>
+    <hr />
+  </li>
+</ul>
