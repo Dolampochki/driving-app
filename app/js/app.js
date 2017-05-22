@@ -9,17 +9,10 @@
         controller: function(){
           this.students = students;
           this.showForm = false;
-          this.getTotalLessons = function(student){
-              var totalLessons = student.lessonsStart;
-              if (student.lessons) {
-                for (var i = 0; i < student.lessons.length; i++) {
-                    totalLessons = totalLessons + student.lessons[i].lessonCount;
-                }
-              }
-              return totalLessons;
-          };
-          this.getTotalPaid = function(student){
+
+          this.getTotal = function(student){
               var totalPaid = 0;
+              var totalLessons = student.lessonsStart;
               var takenLessons = 0;
               if (student.lessons) {
                 for (var i = 0; i < student.lessons.length; i++) {
@@ -27,8 +20,9 @@
                     takenLessons = takenLessons + student.lessons[i].lessonCount;
                 }
               }
-              var totalPaid = student.cost * takenLessons - totalPaid;
-              return totalPaid;
+              totalLessons = takenLessons + totalLessons;
+              totalPaid = student.cost * takenLessons - totalPaid;
+              return {totalPaid: totalPaid, totalLessons: totalLessons};
           };
         },
         controllerAs: 'studentListCtrl'
@@ -57,9 +51,19 @@
         }
       }
     })
-    .controller('lessonsListController', function(){
-      this.lessons = students.lessons;
-      this.showLessons = false;
+    .directive('lessonsList', function(){
+      return {
+        restrict: 'E',
+        templateUrl: 'partials/lessons-list.html',
+        controller: function(){
+          this.lessons = students.lessons;
+          this.addLesson = function(student,lesson){
+            student.lessons.push(this.lesson);
+            this.lesson = {};
+          }
+        },
+        controllerAs: 'lessonsListCtrl'
+      }
     });
 
 
